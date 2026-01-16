@@ -1,0 +1,48 @@
+name: buildDraft
+
+on:
+  push:
+    branches:
+      - drafts
+
+jobs:
+  spellcheck:
+    # https://github.com/matheus23/md-spellcheck-action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: matheus23/md-spellcheck-action@v4.2.2
+        with:
+          files-to-check: "content/*.md"
+          files-to-exclude: "LICENSE.md" # optional
+          words-to-ignore-file: ./words-to-ignore.txt
+
+  test-build:
+      needs: spellcheck
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+          with:
+            submodules: recursive
+
+        # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+        - name: Define variable
+          id: define_version
+          run: echo "VER=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+
+        - name: Login to GitHub Container Registry
+          uses: docker/login-action@v3
+          with:
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+
+        - name: Build Only!
+          uses: docker/build-push-action@v6
+          with:
+            context: .
+            push: false
+            tags: |
+              ghcr.io/${{ github.repository }}:${{ steps.define_version.outputs.VER }}
