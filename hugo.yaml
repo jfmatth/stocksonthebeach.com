@@ -1,8 +1,8 @@
-baseurl: https://example.com/
+baseurl: null
 languageCode: en-us
 theme: hugo-theme-stack
-title: Example Site
-copyright: Example Person
+title: StocksOnTheBeach
+copyright: None
 
 # Theme i18n support
 # Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw
@@ -15,50 +15,18 @@ hasCJKLanguage: false
 languages:
     en:
         languageName: English
-        title: Example Site
+        title: StocksOnTheBeach
         weight: 1
         params:
             sidebar:
-                subtitle: Example description
-    zh-cn:
-        languageName: 简体中文
-        title: 演示站点
-        weight: 2
-        params:
-            sidebar:
-                subtitle: 演示说明
-
-    zh-tw:
-        languageName: 正體中文
-        title: 演示站點
-        weight: 2
-        params:
-            sidebar:
-                subtitle: 演示說明
-
-    ja:
-        languageName: 日本語
-        title: サンプルサイト
-        weight: 2
-        params:
-            sidebar:
-                subtitle: サンプル説明
-    ar:
-        languageName: عربي
-        languagedirection: rtl
-        title: موقع تجريبي
-        weight: 3
-        params:
-            sidebar:
-                subtitle: وصف تجريبي
-
-services:
-    # Change it to your Disqus shortname before using
-    disqus:
-        shortname: "hugo-theme-stack"
-    # GA Tracking ID
-    googleAnalytics:
-        id:
+                subtitle: Talking about Stocks / Trading
+# services:
+#     # Change it to your Disqus shortname before using
+#     disqus:
+#         shortname: "hugo-theme-stack"
+#     # GA Tracking ID
+#     googleAnalytics:
+#         id:
 
 pagination:
     pagerSize: 3
@@ -72,7 +40,7 @@ params:
         - post
     featuredImageField: image
     rssFullContent: true
-    favicon: # e.g.: favicon placed in `static/favicon.ico` of your site folder, then set this field to `/favicon.ico` (`/` is necessary)
+    favicon: favicon.ico
 
     footer:
         since: 2020
@@ -83,12 +51,12 @@ params:
         lastUpdated: Jan 02, 2006 15:04 MST
 
     sidebar:
-        emoji: 🍥
-        subtitle: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        emoji: 
+        subtitle: Sidebar Menu
         avatar:
             enabled: true
             local: true
-            src: img/avatar.png
+            src: img/sotbimage.png
 
     article:
         math: false
@@ -230,18 +198,18 @@ params:
 menu:
     main: []
 
-    social:
-        - identifier: github
-          name: GitHub
-          url: https://github.com/CaiJimmy/hugo-theme-stack
-          params:
-              icon: brand-github
+    # social:
+    #     - identifier: github
+    #       name: GitHub
+    #       url: https://github.com/jfmatth
+    #       params:
+    #           icon: brand-github
 
-        - identifier: twitter
-          name: Twitter
-          url: https://twitter.com
-          params:
-              icon: brand-twitter
+        # - identifier: twitter
+        #   name: Twitter
+        #   url: https://twitter.com
+        #   params:
+        #       icon: brand-twitter
 
 related:
     includeNewer: true
