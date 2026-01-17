@@ -56,7 +56,7 @@ params:
         avatar:
             enabled: true
             local: true
-            src: img/sotbimage.png
+            src: img/stocksonthebeach.png
 
     article:
         math: false
