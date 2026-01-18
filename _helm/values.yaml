@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 2
+replicaCount: 1
 
 image:
   repository: ghcr.io/jfmatth/stocksonthebeach.com
@@ -11,7 +11,7 @@ image:
   
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "justneverlift"
+fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -24,7 +24,8 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations:
+  ad.datadoghq.com/nginx.logs: '[{"source":"nginx","service":"nginx"}]'
 
 podLabels:
     tags.datadoghq.com/env: "production"
@@ -47,7 +48,7 @@ service:
   port: 8080
 
 ingress:
-  enabled: false
+  enabled: true
   className: ""
   annotations:
     cert-manager.io/cluster-issuer: clusterissuer
@@ -64,14 +65,14 @@ ingress:
     # external-dns.alpha.kubernetes.io/record-type: "A"
 
   hosts:
-    - host: justneverlift.com
+    - host: stocksonthebeach.com
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
-    - secretName: justneverlift-https
+    - secretName: stocksonthebeach-https
       hosts:
-        - justneverlift.com
+        - stocksonthebeach.com
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
