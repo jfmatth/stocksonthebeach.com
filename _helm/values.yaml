@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/jfmatth/stocksonthebeach.com
-  tag: v2026.01.18-2
+  tag: v2026.01.18-3
   pullPolicy: Always
   
 imagePullSecrets: []

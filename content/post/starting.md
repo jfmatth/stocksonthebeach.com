@@ -8,7 +8,7 @@ license:
 hidden: false
 comments: true
 draft: false
-toc: false
+toc: true
 ---
 
 # StocksOnTheBeach
