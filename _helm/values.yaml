@@ -1,0 +1,125 @@
+# Default values for _helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/jfmatth/stocksonthebeach.com
+  tag: v2026.01.18-3
+  pullPolicy: Always
+  
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations:
+  ad.datadoghq.com/nginx.logs: '[{"source":"nginx","service":"nginx"}]'
+
+podLabels:
+    tags.datadoghq.com/env: "production"
+    tags.datadoghq.com/service: "stocksonthebeach"
+
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    cert-manager.io/cluster-issuer: clusterissuer
+    traefik.ingress.kubernetes.io/router.middlewares: cert-manager-redirect-https@kubernetescrd
+
+    # for when DO DNS works with cnames
+    # trying 4/4, see if it works :)
+    # external-dns.alpha.kubernetes.io/target: "edge.3756home.org"
+    # external-dns.alpha.kubernetes.io/record-type: "CNAME"
+    # external-dns.alpha.kubernetes.io/hostname: justneverlift.com
+
+    # for now
+    # external-dns.alpha.kubernetes.io/target: "104.182.229.89"
+    # external-dns.alpha.kubernetes.io/record-type: "A"
+
+  hosts:
+    - host: stocksonthebeach.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: stocksonthebeach-https
+      hosts:
+        - stocksonthebeach.com
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  periodSeconds: 60         # check every 1m
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  periodSeconds: 60         # check every 1m
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
